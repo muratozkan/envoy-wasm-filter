@@ -6,15 +6,15 @@ services:
       dockerfile: Dockerfile.proxy
     volumes:
       - ./envoy/envoy.yaml:/etc/envoy.yaml
-      - ./target/wasm32-unknown-unknown/release/envoy_wasm_filter.wasm:/etc/envoy_wasm_filter.wasm
+      - ./target/wasm32-unknown-unknown/debug/envoy_wasm_filter.wasm:/etc/envoy_wasm_filter.wasm
     networks:
       - envoymesh
     expose:
       - "80"
       - "8001"
     ports:
-      - "18000:80"
-      - "18001:8001"
+      - "80:18000"
+      - "8001:18001"
 
   web_service:
     image: hashicorp/http-echo
@@ -28,6 +28,23 @@ services:
       - "5678"
     ports:
       - "18080:5678"
+  
+  grpc_service:
+    image: tkpd/gripmock:v1.10
+    ports:
+      - "4770:4770"
+      - "4771:4771"
+    volumes:
+      - "./proto:/proto"
+      - "./stubs:/stubs"
+    command: 
+      - '--stub=/stubs'
+      - '/proto/file1.proto'
+    networks:
+      envoymesh:
+        aliases:
+          - grpc_service
+
 
 networks:
   envoymesh: {}

@@ -10,3 +10,7 @@ crate-type = ["cdylib"]
 [dependencies]
 log = "0.4.17"
 proxy-wasm = "0.2.0"
+prost = "0.11.5"
+
+[build-dependencies]
+prost-build = "0.11.5"

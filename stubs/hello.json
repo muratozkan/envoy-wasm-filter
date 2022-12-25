@@ -1,0 +1,15 @@
+{
+  "service": "HelloService",
+  "method": "SayHello",
+  "input": {
+    "equals": {
+      "name": "1234"
+    }
+  },
+  "output": {
+    "data": {
+      "message": "Hello 1234",
+      "return_code": 2
+    }
+  }
+}
