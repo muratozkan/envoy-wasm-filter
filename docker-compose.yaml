@@ -17,17 +17,15 @@ services:
       - "8001:18001"
 
   web_service:
-    image: hashicorp/http-echo
-    command:
-      - '-text="Welcome to WASM land"'
+    image: mendhak/http-https-echo
     networks:
       envoymesh:
         aliases:
           - web_service
     expose:
-      - "5678"
+      - "8080"
     ports:
-      - "18080:5678"
+      - "8080:80"
   
   grpc_service:
     image: tkpd/gripmock:v1.10

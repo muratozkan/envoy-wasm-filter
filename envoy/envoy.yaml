@@ -53,7 +53,7 @@ static_resources:
               address:
                 socket_address:
                   address: web_service
-                  port_value: 5678
+                  port_value: 80
     - name: grpc_service
       connect_timeout: 1s
       type: STRICT_DNS

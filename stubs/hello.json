@@ -8,7 +8,7 @@
   },
   "output": {
     "data": {
-      "message": "Hello 1234",
+      "message": "from grpc 1234",
       "return_code": 2
     }
   }
