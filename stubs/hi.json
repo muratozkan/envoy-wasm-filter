@@ -1,14 +1,14 @@
 {
   "service": "HelloService",
-  "method": "SayHello",
+  "method": "SayHi",
   "input": {
     "equals": {
-      "name": "hello"
+      "hi_name": "hi"
     }
   },
   "output": {
     "data": {
-      "hello": "hello! from grpc"
+      "hi": "hi! from grpc"
     }
   }
 }

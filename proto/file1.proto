@@ -2,22 +2,26 @@ syntax = "proto3";
 
 package multifiles;
 
+// Used by gripmock
 option go_package = "github.com/tokopedia/gripmock/multi-files";
 
-
-
 service HelloService {
-  // simple unary method
-  rpc SayHello (Request1) returns (Reply1);
+  rpc SayHello (HelloRequest) returns (HelloReply);
+  rpc SayHi (HiRequest) returns (HiReply);
 }
 
-// The request message containing the user's name.
-message Request1 {
+message HelloRequest {
   string name = 1;
 }
 
-// The response message containing the greetings
-message Reply1 {
-  string message = 1;
-  int32 return_code = 2;
+message HelloReply {
+  string hello = 1;
+}
+
+message HiRequest {
+  string hi_name = 1;
+}
+
+message HiReply {
+  string hi = 1;
 }
