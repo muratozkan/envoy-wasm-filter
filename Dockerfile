@@ -1,8 +1,5 @@
-FROM rust:1.64-slim
+FROM rust:1.64-slim as builder
 
-RUN apt-get update && \
-    apt-get install -y protobuf-compiler && \
-    rm -rf /var/lib/apt/lists/*
 RUN rustup target add wasm32-unknown-unknown
 
 WORKDIR /build
@@ -19,3 +16,10 @@ COPY build.rs /build/
 RUN ls -al src
 
 RUN cargo build --release --target wasm32-unknown-unknown
+
+# Manually build OCI Image.
+# https://github.com/solo-io/wasm/blob/master/spec/spec-compat.md
+FROM scratch
+
+LABEL org.opencontainers.image.title envoy-wasm-filter
+COPY --from=builder /build/target/wasm32-unknown-unknown/release/envoy_wasm_filter.wasm ./plugin.wasm

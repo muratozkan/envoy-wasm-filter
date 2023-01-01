@@ -1,0 +1,51 @@
+# Simulates the lookup service.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: greeter
+  name: greeter
+  namespace: greeter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: greeter
+  template:
+    metadata:
+      labels:
+        app: greeter
+    spec:
+      containers:
+      - image: tkpd/gripmock:v1.10
+        name: gripmock
+        imagePullPolicy: IfNotPresent
+        args: ["--stub=/stubs", "/proto/file1.proto"]
+        volumeMounts:
+          - name: stubs
+            mountPath: "/stubs"
+          - name: protos
+            mountPath: "/proto"
+      volumes:
+        - name: stubs
+          configMap:
+            name: stubs
+        - name: protos
+          configMap:
+            name: proto
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: greeter
+  name: greeter
+  namespace: greeter
+spec:
+  ports:
+  - port: 4770
+    protocol: TCP
+    targetPort: 4770
+  selector:
+    app: greeter
+  type: ClusterIP

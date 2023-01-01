@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile.proxy
     volumes:
       - ./envoy/envoy.yaml:/etc/envoy.yaml
-      - ./target/wasm32-unknown-unknown/debug/envoy_wasm_filter.wasm:/etc/envoy_wasm_filter.wasm
+      - ./target/wasm32-unknown-unknown/release/envoy_wasm_filter.wasm:/etc/envoy_wasm_filter.wasm
     networks:
       - envoymesh
     expose:

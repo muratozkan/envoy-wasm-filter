@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package multifiles;
 
+import "google/protobuf/timestamp.proto";
+
 // Used by gripmock
 option go_package = "github.com/tokopedia/gripmock/multi-files";
 
@@ -16,6 +18,7 @@ message HelloRequest {
 
 message HelloReply {
   string hello = 1;
+  google.protobuf.Timestamp created = 2;
 }
 
 message HiRequest {
@@ -24,4 +27,5 @@ message HiRequest {
 
 message HiReply {
   string hi = 1;
+  google.protobuf.Timestamp created = 2;
 }

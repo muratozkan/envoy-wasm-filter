@@ -11,6 +11,11 @@ crate-type = ["cdylib"]
 log = "0.4.17"
 proxy-wasm = "0.2.1"
 prost = "0.11.5"
+prost-types = "0.11.5"
 
 [build-dependencies]
+protoc-bin-vendored = "3.0.0"
 prost-build = "0.11.5"
+
+[profile.release]
+lto = true
