@@ -13,8 +13,6 @@ COPY src /build/src
 COPY proto /build/proto
 COPY build.rs /build/
 
-RUN ls -al src
-
 RUN cargo build --release --target wasm32-unknown-unknown
 
 # Manually build OCI Image.

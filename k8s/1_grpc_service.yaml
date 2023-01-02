@@ -43,7 +43,8 @@ metadata:
   namespace: greeter
 spec:
   ports:
-  - port: 4770
+  - name: grpc
+    port: 4770
     protocol: TCP
     targetPort: 4770
   selector:

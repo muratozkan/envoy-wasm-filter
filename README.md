@@ -36,7 +36,7 @@ Requires:
 - `kubectl`
 - `helm`
 
-Guide uses `default` minikube setup, please clean up before starting with `minikube delete`.
+Guide uses `default` minikube profile, please clean up before starting with `minikube delete`.
 
     minikube start --insecure-registry "10.0.0.0/24"
     minikube addons enable registry
@@ -52,7 +52,7 @@ Install `istio` with `helm`. This should be the same as described by [istio docs
 
 Prepare the protobuf files and stubs to be used by gripmock. It will simulate our internal gRPC server:
 
-    kubectl create ns greeter
+    kubectl apply -f k8s/0_namespace.yaml
     kubectl create configmap stubs -n greeter --from-file=./stubs
     kubectl create configmap proto -n greeter --from-file=./proto
     kubectl apply -f k8s/1_grpc_service.yaml
@@ -76,8 +76,11 @@ Test with:
 
 1. Difference between `wasm32-unknown-unknown` and `wasm32-wasi`:
   
- `wasm32-unknown-unknown` is closer to bare metal - file i/o, env. vars, and other functionality that's normally supported by the OS is available. `wasm32-wasi` can access some of these functionality, because `wasi` interface brings it. More info [here](https://users.rust-lang.org/t/wasm32-unknown-unknown-vs-wasm32-wasi/78325/5)
+  `wasm32-unknown-unknown` is closer to bare metal - file i/o, env. vars, and other functionality that's normally supported by the OS is available. `wasm32-wasi` can access some of these functionality, because `wasi` interface brings it. More info [here](https://users.rust-lang.org/t/wasm32-unknown-unknown-vs-wasm32-wasi/78325/5)
 
+2. Which crate to use: `proxy-wasm` vs `envoy-sdk`?:
+
+  `envoy-sdk` ([github](https://github.com/tetratelabs/envoy-wasm-rust-sdk/tree/master/envoy-sdk)) is deprecated, although still appears in some early examples. The `proxy-wasm` ([github](https://github.com/proxy-wasm/proxy-wasm-rust-sdk)) is the preferred SDK now, and it's not Envoy specific. Notably, `nginx` will be supporting `proxy-wasm` ABI in the future.
 
 ## Resources:
 - [WASM Workshop from Tetratelabs](https://tetratelabs.github.io/wasm-workshop/) Very useful tutorial, uses go to build a sampel filter and deploy to Istio.

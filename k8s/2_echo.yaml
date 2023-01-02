@@ -43,6 +43,19 @@ spec:
     app: echo-app
   type: ClusterIP
 ---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: echo-app-route
+  namespace: echo-app
+spec:
+  hosts:
+  - echo-app.echo-app.svc.cluster.local
+  http:
+  - route:
+    - destination:
+        host: echo-app.echo-app.svc.cluster.local
+---
 apiVersion: extensions.istio.io/v1alpha1
 kind: WasmPlugin
 metadata:
@@ -54,5 +67,4 @@ spec:
       app: echo-app
   url: oci://registry.kube-system.svc.cluster.local/envoy-wasm-plugin:latest
   pluginConfig:
-    header_1: "some_value_1"
-    header_2: "another_value"
+    grpc_service: "outbound|4770||greeter.greeter.svc.cluster.local"
