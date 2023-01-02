@@ -78,9 +78,11 @@ Now build and push the OCI image of the plugin to docker registry residing in `m
     docker push localhost:5000/envoy-wasm-plugin:latest 
 
 Deploy the application
+
     kubectl apply -f k8s/2_echo.yaml
 
 Test with (using curl requests from local setup):
+
     kubectl run curl --image=curlimages/curl -it --rm -- /bin/sh
 
 ## Notes

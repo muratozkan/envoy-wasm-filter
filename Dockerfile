@@ -1,4 +1,4 @@
-FROM rust:1.64-slim as builder
+FROM rust:1.66-slim as builder
 
 RUN rustup target add wasm32-unknown-unknown
 
@@ -19,5 +19,5 @@ RUN cargo build --release --target wasm32-unknown-unknown
 # https://github.com/solo-io/wasm/blob/master/spec/spec-compat.md
 FROM scratch
 
-LABEL org.opencontainers.image.title envoy-wasm-filter
+LABEL org.opencontainers.image.title envoy-wasm-plugin
 COPY --from=builder /build/target/wasm32-unknown-unknown/release/envoy_wasm_filter.wasm ./plugin.wasm
