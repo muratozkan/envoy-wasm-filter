@@ -4,11 +4,22 @@ Proof-of-concept WASM Envoy Filter which makes gRPC requests to enhance a given 
 
 Demonstrates the following:
 - Making (different) gRPC requests from an Envoy Plugin
-- Using `proxy-wasm-rust-sdk` to configure the plugin, log metrics and enhance the request
+- Using `proxy-wasm-rust-sdk` to configure the plugin, write logs and enhance the request
 - Packaging the plugin as OCI image
 - Sample setup in docker
+- Sample mesh setup on Istio with minikube
 
-# Local Setup
+To do - in the plugin:
+- Collect & publish metrics
+- Propagate zipkin tracing headers to grpc host
+- Remove `expect()`'s (since they can cause panics)
+- Configurable fail open/fail closed
+
+To do - in the istio/minikube setup
+- Test with gRPC server in the mesh (currently it doesn't have envoy running with it)
+- Expose `echo` with istio ingress gateway
+
+## Local Setup
 
 Runs the filter as an addon in manually configured envoy proxy.
 
@@ -27,7 +38,7 @@ Test with:
     curl -H 'token: hello' -v localhost # Should add '"my-token": "hello! from grpc"' to upstream headers
     curl -H 'other: hi:' -v localhost   # Should add '"my-token": "hi! from grpc"' to upstream headers
 
-# Minikube Setup
+## Minikube Setup
 
 Runs the filter in istio configured in a `minikube` cluster. 
 
@@ -69,10 +80,10 @@ Now build and push the OCI image of the plugin to docker registry residing in `m
 Deploy the application
     kubectl apply -f k8s/2_echo.yaml
 
-Test with:
+Test with (using curl requests from local setup):
     kubectl run curl --image=curlimages/curl -it --rm -- /bin/sh
 
-# Notes
+## Notes
 
 1. Difference between `wasm32-unknown-unknown` and `wasm32-wasi`:
   
