@@ -89,7 +89,7 @@ Test with (using curl requests from local setup):
 
 1. Difference between `wasm32-unknown-unknown` and `wasm32-wasi`:
   
-  `wasm32-unknown-unknown` is closer to bare metal - file i/o, env. vars, and other functionality that's normally supported by the OS is available. `wasm32-wasi` can access some of these functionality, because `wasi` interface brings it. More info [here](https://users.rust-lang.org/t/wasm32-unknown-unknown-vs-wasm32-wasi/78325/5)
+  `wasm32-unknown-unknown` is closer to bare metal - file i/o, env. vars, and other functionality that's normally supported by the OS is **not** available. `wasm32-wasi` can access some of these functionality, because `wasi` interface brings it. More info [here](https://users.rust-lang.org/t/wasm32-unknown-unknown-vs-wasm32-wasi/78325/5)
 
 2. Which crate to use: `proxy-wasm` vs `envoy-sdk`?:
 
